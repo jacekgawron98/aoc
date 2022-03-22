@@ -5,25 +5,17 @@ def day(population)
     return population;
 end
 
-def day2(population)
-    #born = population.map!{ |fish| fish -= 4}.select{ |fish| fish < 0 }
-    #population.map!{ |fish| fish < 0 ? fish + 6 : fish};
-    #population.concat born.map{ |fish| fish+8 }
-    #return population;
-    total = population.length
-    population.map!{ |fish| 256 - fish }
-    population.each do |fish| 
-        born_count = fish/7;
-        total += born_count;
-        population.drop(1);
-        born_count.times do |index|
-            if ((fish - index * 7 - 2) > 0)
-                population.push(fish - index * 7 - 2)
-            end
-        end 
-        puts total;
-    end      
-    return total
+def day2(population,size)
+    days = [0,0,0,0,0,0,0,0,0]
+    9.times do |i|
+        days[i] = population.select{ |fish| fish == i}.length;
+    end
+    size.times do
+        born = days.shift();
+        days.push(born);
+        days[6] += born;
+    end    
+    return days.inject(:+);
 end
 
 population = Array.new
@@ -32,7 +24,8 @@ File.foreach("ex6.txt") { |line|
     population = line.split(",").map(&:to_i);
 }
 
-puts day2(population);
+puts day2(population,80);
+puts day2(population,256);
 #80.times do |index|
 #    population = day(population);
 #    puts index
