@@ -4,9 +4,9 @@ end
 
 def check_if_contains(mask1,mask2)
     if mask1 == "" || mask2 == ""
-        return -1
+        return false
     end
-    return (mask1.split("") & mask2.split("")).size == mask2.split("").size ? 1 : 0
+    return (mask1.split("") & mask2.split("")).size == mask2.split("").size ? true : false
 end
 
 def get_dif(seq1, seq2)
@@ -22,16 +22,16 @@ def set_digit_map(map_data,map)
     five_subset = map_data.filter{ |x| x.length == 5}
     six_subset = map_data.filter{ |x| x.length == 6}
     
-    map[3] = five_subset.find{ |x| check_if_contains(x,map[1]) == 1 }
+    map[3] = five_subset.find{ |x| check_if_contains(x,map[1]) }
     five_subset = five_subset - [map[3]]
     
-    map[9] = six_subset.find{ |x| check_if_contains(x,map[3]) == 1 }
+    map[9] = six_subset.find{ |x| check_if_contains(x,map[3]) }
     six_subset = six_subset - [map[9]]
     
-    map[0] = six_subset.find{ |x| check_if_contains(x,map[7]) == 1 }
+    map[0] = six_subset.find{ |x| check_if_contains(x,map[7]) }
     six_subset = six_subset - [map[0]]
     
-    map[5] = five_subset.find{ |x| check_if_contains(x,get_dif(map[4],map[1])) == 1 }
+    map[5] = five_subset.find{ |x| check_if_contains(x,get_dif(map[4],map[1])) }
     five_subset = five_subset - [map[5]]
     
     map[6] = six_subset[0];
